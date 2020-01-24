@@ -10,11 +10,8 @@
   // Вывожу полученное число в консоль
   console.log(sum);
 
-  // Возвожу полученное число в степень
-  let d = sum**3;
+  // Возвожу полученное число в степень, вывожу первые 2 цифры, полученного числа в тег div
+  let multiply = Number((sum ** 3).toString().slice(0, 2));
+  document.getElementById("result").innerHTML=multiply;
 
-  // Вывожу первые 2 цифры, полученного числа в тег div
-  let g = d.toString();
-  let f = g.substr(0, 2);
-  let t = Number(f);
-  document.getElementById("result").innerHTML=t;
+  
