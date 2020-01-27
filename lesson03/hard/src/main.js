@@ -1,47 +1,35 @@
-let lang
-lang = {
-   ru: ('Понедельник' + ',' + ' ' + 'Вторник' + ',' + ' ' + 'Среда' + ',' + ' ' + 'Четверг' + ',' + ' ' + 'Пятница' + ',' + ' ' + 'Суббота' + ',' + ' ' + 'Воскресенье'),
-   en: ('Monday' + ',' + ' ' + 'Tuesday' + ',' + ' ' + 'Wednesday' + ',' + ' ' + 'Thursday' + ',' + ' ' + 'Friday' + ',' + ' ' + 'Saturday' + ',' + ' ' + 'Sunday')
-}
-let messege = prompt('Напишите желаемый язык страницы: русский или английский');
+let lang = [
+   arrayRu = ('Понедельник' + ',' + ' ' + 'Вторник' + ',' + ' ' + 'Среда' + ',' + ' ' + 'Четверг' + ',' + ' ' + 'Пятница' + ',' + ' ' + 'Суббота' + ',' + ' ' + 'Воскресенье'),
+   arrayEn = ('Monday' + ',' + ' ' + 'Tuesday' + ',' + ' ' + 'Wednesday' + ',' + ' ' + 'Thursday' + ',' + ' ' + 'Friday' + ',' + ' ' + 'Saturday' + ',' + ' ' + 'Sunday'),
+]
+let messege = prompt('Напишите желаемый язык страницы: русский или английский', 'русский');
 
-if (messege === 'Русский') {
-   console.log(lang.ru);
-} else if( messege === 'русский'){
-   console.log(lang.ru);
-} else if( messege === 'Английский'){
-   console.log(lang.en);
+if (messege === 'русский') {
+   console.log(arrayRu);
 } else if( messege === 'английский'){
-   console.log(lang.en);
+   console.log(arrayEn);
 } else {
    alert('Язык указан неверно, перезагрузите страницу и попробуйте снова');
 }
 
 switch (messege) {
-   case 'Русский':
-      console.log(lang.ru);
-      break;
    case 'русский':
-      console.log(lang.ru);
-      break;
-   case 'Английский':
-      console.log(lang.en);
+      console.log(arrayRu);
       break;
    case 'английский':
-      console.log(lang.en);
+      console.log(arrayEn);
       break;
    default: 
    alert('Язык указан неверно, перезагрузите страницу и попробуйте снова');
 }
-lang = [
-   [ru = ('Понедельник' + ',' + ' ' + 'Вторник' + ',' + ' ' + 'Среда' + ',' + ' ' + 'Четверг' + ',' + ' ' + 'Пятница' + ',' + ' ' + 'Суббота' + ',' + ' ' + 'Воскресенье')],
-   [en = ('Monday' + ',' + ' ' + 'Tuesday' + ',' + ' ' + 'Wednesday' + ',' + ' ' + 'Thursday' + ',' + ' ' + 'Friday' + ',' + ' ' + 'Saturday' + ',' + ' ' + 'Sunday')]
-];
 
-let languageOfPage = (messege === 'Русский') ? ru :
-(messege === 'русский') ? ru :
-(messege === 'Английский') ? en :
-(messege === 'английский') ? en :
+let date = {
+   ru: ['Понедельник' + ',' + ' ' + 'Вторник' + ',' + ' ' + 'Среда' + ',' + ' ' + 'Четверг' + ',' + ' ' + 'Пятница' + ',' + ' ' + 'Суббота' + ',' + ' ' + 'Воскресенье'],
+   en: ['Monday' + ',' + ' ' + 'Tuesday' + ',' + ' ' + 'Wednesday' + ',' + ' ' + 'Thursday' + ',' + ' ' + 'Friday' + ',' + ' ' + 'Saturday' + ',' + ' ' + 'Sunday']
+}
+
+let languageOfPage = (messege === 'русский') ? date.ru :
+(messege === 'английский') ? date.en :
 alert('Язык указан неверно, перезагрузите страницу и попробуйте снова');
 
 console.log(languageOfPage);
