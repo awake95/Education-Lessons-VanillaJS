@@ -28,8 +28,8 @@ deposit = confirm('Есть ли у вас депозит в банке?');
 console.log(deposit);
 
 let expenses1 = prompt('Введите обязательную статью расходов?');
-let expenses2 = prompt('Введите обязательную статью расходов?');
 let amount1 = prompt('Во сколько это обойдется?');
+let expenses2 = prompt('Введите обязательную статью расходов?');
 let amount2 = prompt('Во сколько это обойдется?');
 
 let budgetMonth = (money - amount1 - amount2);
