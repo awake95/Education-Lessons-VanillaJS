@@ -33,11 +33,15 @@ switch (messege) {
    default: 
    alert('Язык указан неверно, перезагрузите страницу и попробуйте снова');
 }
+lang = [
+   [ru = ('Понедельник' + ',' + ' ' + 'Вторник' + ',' + ' ' + 'Среда' + ',' + ' ' + 'Четверг' + ',' + ' ' + 'Пятница' + ',' + ' ' + 'Суббота' + ',' + ' ' + 'Воскресенье')],
+   [en = ('Monday' + ',' + ' ' + 'Tuesday' + ',' + ' ' + 'Wednesday' + ',' + ' ' + 'Thursday' + ',' + ' ' + 'Friday' + ',' + ' ' + 'Saturday' + ',' + ' ' + 'Sunday')]
+];
 
-let languageOfPage = (messege === 'Русский') ? lang.ru :
-(messege === 'русский') ? lang.ru :
-(messege === 'Английский') ? lang.en :
-(messege === 'английский') ? lang.en :
+let languageOfPage = (messege === 'Русский') ? ru :
+(messege === 'русский') ? ru :
+(messege === 'Английский') ? en :
+(messege === 'английский') ? en :
 alert('Язык указан неверно, перезагрузите страницу и попробуйте снова');
 
 console.log(languageOfPage);
