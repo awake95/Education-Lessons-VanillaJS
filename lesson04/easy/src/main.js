@@ -41,7 +41,7 @@ getExpensesMonth();
 function getAccumulatedMonth () {
   return money - (amount1 + amount2);
 };
-getAccumulatedMonth();
+console.log('Бюджет на месяц: ' + getAccumulatedMonth());
 
 let accumulatedMonth = getAccumulatedMonth();
 console.log(accumulatedMonth);
