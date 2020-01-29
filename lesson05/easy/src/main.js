@@ -17,35 +17,27 @@ console.log('Цель заработать', mission, 'рублей');
 console.log(addExpenses.toLowerCase());
 console.log(addExpenses.split(', '));
 
-let showTypeOf = function(data){
+const showTypeOf = function(data){
   console.log(typeof(data));
 }
 showTypeOf(money);
 showTypeOf(income);
 showTypeOf(deposit); 
 
-// money = prompt('Ваш месячный доход?');
-// console.log(money);
-
 addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую?');
 
 deposit = confirm('Есть ли у вас депозит в банке?');
 console.log(deposit);
 
-// let expenses1 = prompt('Введите обязательную статью расходов?');
-// let amount1 = + prompt('Во сколько это обойдется?');
-// let expenses2 = prompt('Введите обязательную статью расходов?');
-// let amount2 = + prompt('Во сколько это обойдется?');
+let start = function(){
+  
+  do{
+    money = prompt('Ваш месячный доход?');
+  }
+  while (!isNumber(money));
+};
 
-// let start = function(){
-//   money = prompt('Ваш месячный доход?');
-
-//   while (!isNumber(money)) {
-//         money = prompt('Ваш месячный доход?');   
-//   }
-// };
-
-// start();
+start();
 
 
 do{
@@ -54,10 +46,9 @@ do{
 while (!isNumber(money));
 
 
-
 let expenses = [];
 
-let getExpensesMonth = function() {
+const getExpensesMonth = function() {
     
     let sum = 0, count;
 
@@ -77,16 +68,16 @@ let getExpensesMonth = function() {
 };
 
 
-let expensesAmount = getExpensesMonth(); 
+const expensesAmount = getExpensesMonth(); 
 
 console.log ('Расходы за месяц: ' + expensesAmount);
 
-let getAccumulatedMonth = function(){
+const getAccumulatedMonth = function(){
   return money - expensesAmount;
 };
 getAccumulatedMonth();
 
-let accumulatedMonth = getAccumulatedMonth();
+const accumulatedMonth = getAccumulatedMonth();
 console.log(accumulatedMonth);
 
 function getTargetMonth () {
@@ -96,7 +87,6 @@ function getTargetMonth () {
   }
   while (g < 0);
   
-  
   return mission / accumulatedMonth;
 
 };
@@ -105,7 +95,7 @@ getTargetMonth();
 
 let budgetDay = accumulatedMonth / 30;
 
-let getStatusIncome = function(){
+const getStatusIncome = function(){
   switch (true){ 
     case budgetDay >= 1200:
       return ('У вас высокий уровень дохода');
