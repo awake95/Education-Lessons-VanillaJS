@@ -29,7 +29,7 @@ addExpenses = prompt('Перечислите возможные расходы �
 deposit = confirm('Есть ли у вас депозит в банке?');
 console.log(deposit);
 
-let start = function(){
+const start = function(){
   
   do{
     money = prompt('Ваш месячный доход?');
@@ -38,13 +38,6 @@ let start = function(){
 };
 
 start();
-
-
-do{
-  money = prompt('Ваш месячный доход?');
-}
-while (!isNumber(money));
-
 
 let expenses = [];
 
