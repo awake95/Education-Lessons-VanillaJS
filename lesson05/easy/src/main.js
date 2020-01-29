@@ -75,10 +75,10 @@ console.log(accumulatedMonth);
 
 function getTargetMonth () {
   do{
-    g = 'Цель не будет достигнута';
-    console.log(g);
+    failedMission = 'Цель не будет достигнута';
+    console.log(failedMission);
   }
-  while (g < 0);
+  while (failedMission < 0);
   
   return mission / accumulatedMonth;
 
