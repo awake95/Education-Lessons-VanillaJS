@@ -38,7 +38,7 @@ let appData = {
       let itemIncome, cacheIncome
 
       do {
-        itemIncome = prompt('Какой вас дополнитльный доход', 'Разработка сайтов');
+        itemIncome = prompt('Какой у вас дополнительный доход', 'Разработка сайтов');
       }
       while (isNumber(itemIncome));
 
@@ -49,8 +49,18 @@ let appData = {
       appData.income[itemIncome] = cacheIncome;
     }
 
-    let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую?');
-    console.log(addExpenses.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' '));
+    const checkQuestion = function () {
+      let addExpenses;
+      do {
+        addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую?');
+      }
+
+      while (isNumber(addExpenses) || addExpenses === '' || addExpenses === null)
+      console.log(addExpenses.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' '));
+
+    }
+
+    checkQuestion();
 
 
     appData.deposit = confirm('Есть ли у вас депозит в банке?');
