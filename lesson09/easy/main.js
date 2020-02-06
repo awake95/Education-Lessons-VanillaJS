@@ -1,0 +1,22 @@
+
+let calcBtn = document.getElementById('start');
+let addIncomeButton = document.getElementsByTagName('button')[0];
+let addExpensesButton = document.getElementsByTagName('button')[1];
+let checkBox = document.querySelector('.deposit-checkmark');
+let inputIncomeItem = document.querySelectorAll('.additional_income-item');
+let inputBudgetDay = document.querySelectorAll('.result-total')[1];
+let inputExpensesMonth = document.querySelectorAll('.result-total')[2];
+let inputAdditionalIncome = document.querySelectorAll('.result-total')[3];
+let inputAdditionalExpenses = document.querySelectorAll('.result-total')[4];
+let inputIncomePeriod = document.querySelectorAll('.result-total')[5];
+let inputTargetMonth = document.querySelectorAll('.result-total')[6];
+let salaryAmount = document.querySelector('.salary-amount');
+let incomeTitle = document.querySelector('.income-title');
+let incomeAmount= document.querySelector('.income-amount');
+let additionalIncomeItem = document.querySelector('.additional_income-item');
+let expensesTitle = document.querySelector('.expenses-title');
+let expensesAmount = document.querySelector('.expenses-amount');
+let additionalExpensesItem = document.querySelector('.additional_expenses-item');
+let targetAmount = document.querySelector('.target-amount');
+let periodSelect = document.querySelector('.period-select');
+console.log(periodSelect);
