@@ -47,7 +47,8 @@ let appData = {
     start.disabled = true;
 
     appData.budget = +salaryAmount.value;
-    appData.buttonDisabled();
+
+    // appData.buttonDisabled();
     appData.getExpenses();
     appData.getIncome();
     appData.getExpensesMonth();
@@ -55,9 +56,11 @@ let appData = {
     appData.getAddIncome();
     appData.getBudget();
     appData.rangeValue();
+    appData.incomePeriodValueRange();
    
     appData.showResult();
   },
+
   showResult: function () {
     budgetMonthValue.value = appData.budgetMonth;
     budgetDayValue.value = appData.budgetDay;
@@ -67,7 +70,7 @@ let appData = {
     targetMonthValue.value = Math.ceil(appData.getTargetMonth());
     incomePeriodValue.value = appData.calcPeriod();
     targetAmount.value = Math.ceil(appData.getTargetMonth());
-    
+    incomePeriodValue.value = appData.calcPeriod();
 
   },
 
@@ -139,12 +142,8 @@ let appData = {
     target.innerHTML = newValue;
   },
 
-  buttonDisabled: function() {
-    if(salaryAmount.value === '' === null){
-      start.disabled = true;
-    }else {
-      start.disabled = false;
-    }
+  incomePeriodValueRange: function(){
+
   },
 
   asking: function () {
@@ -237,9 +236,15 @@ let appData = {
   }
 };
 
+start.disabled = true;
+salaryAmount.addEventListener('input', function(){
+    if(salaryAmount.value === ''){
+      start.disabled = true
+    }  else {start.disabled = false}
+});
+
 start.addEventListener('click', appData.start);
-salaryAmount.addEventListener('input', appData.buttonDisabled);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
 titlePeriodAmount.addEventListener('input', appData.rangeValue);
-
+incomePeriodValue.addEventListener('input', appData.incomePeriodValueRange);
