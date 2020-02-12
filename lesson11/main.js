@@ -20,10 +20,12 @@ let start = document.getElementById('start'),
     targetAmount = document.querySelector('.target-amount'),
     periodSelect = document.querySelector('.period-select'),
     incomeItems = document.querySelectorAll('.income-items'),
-    additionalExpensesItem = document.querySelector('.additional_expenses-item')
-    titlePeriodAmount = document.querySelector('input[type="range"]');
+    additionalExpensesItem = document.querySelector('.additional_expenses-item'),
+    titlePeriodAmount = document.querySelector('input[type="range"]'),
+    periodAmount = document.querySelector('.period-amount');
 
-    let isNumber = function (n) {
+
+let isNumber = function (n) {
   return !isNaN(parseFloat(n)) && isFinite(n)
 };
 
@@ -143,7 +145,8 @@ let appData = {
   },
 
   incomePeriodValueRange: function(){
-
+    titlePeriodAmount.textContent = periodSelect.value;
+    incomePeriodValue.value = appData.calcPeriod();
   },
 
   asking: function () {
@@ -190,7 +193,6 @@ let appData = {
     }
 
   },
-
 
   getBudget: function () {
     appData.budgetDay = Math.ceil(appData.budget / 30);
@@ -247,4 +249,4 @@ start.addEventListener('click', appData.start);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
 titlePeriodAmount.addEventListener('input', appData.rangeValue);
-incomePeriodValue.addEventListener('input', appData.incomePeriodValueRange);
+periodSelect.addEventListener('input', appData.incomePeriodValueRange);
