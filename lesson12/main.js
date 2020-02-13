@@ -116,7 +116,7 @@ let appData = {
       let itemIncome = item.querySelector('.income-title').value;
       let cashIncome = item.querySelector('.income-amount').value;
       if (itemIncome !== '' && cashIncome !== '') {
-        this.income[itemIncome] = +cashIncome;
+        appData.income[itemIncome] = +cashIncome;
         this.incomeMonth = +cashIncome;
       }
     });
