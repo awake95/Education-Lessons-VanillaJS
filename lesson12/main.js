@@ -131,7 +131,7 @@ let appData = {
     addExpenses.forEach(function(item) {
       item = item.trim();
       if (item !== '') {
-        this.addExpenses.push(item);
+        appData.addExpenses.push(item);
       }
     })
    },
@@ -140,7 +140,7 @@ let appData = {
     additionalIncomeItem.forEach(function (item) {
       let itemValue = item.value.trim();
       if (itemValue !== '') {
-        this.addIncome.push(itemValue);
+        appData.addIncome.push(itemValue);
       }
     });
   },
