@@ -211,11 +211,11 @@ AppData.prototype.resetMenu = function () {
 };
 
 
-AppData.getInfoDeposit();
+// AppData.getInfoDeposit();
 
 AppData.prototype.eventListeners = function () {
 
-  start.addEventListener('click', this.start.bind(this));
+  start.addEventListener('click', this.start.bind(appData));
   expensesAdd.addEventListener('click', this.addExpensesBlock);
   incomeAdd.addEventListener('click', this.addIncomeBlock);
   periodSelect.addEventListener('input', this.changePeriod);
@@ -235,6 +235,10 @@ AppData.prototype.eventListeners = function () {
     cancel.addEventListener('click', this.resetMenu);
 
 };
+
+const appData = new AppData;
+
+appData.eventListeners();
 
 
 function DomElement(selector, height, width, bg, fontSize) {
