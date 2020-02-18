@@ -1,69 +1,73 @@
 'use strict';
 
-let start = document.getElementById('start'),
-	btnPlus = document.getElementsByTagName('button'),
-	incomeAdd = btnPlus[0],
-	expensesAdd = btnPlus[1],
-	checkDeposit = document.querySelector('#deposit-check'),
-	incomeItem = document.querySelectorAll('.additional_income-item'),
-	budgetMonthValue = document.getElementsByClassName('budget_month-value')[0],
-	budgetDayValue = document.getElementsByClassName('budget_day-value')[0],
-	expensesMonthValue = document.getElementsByClassName('expenses_month-value')[0],
-	addictionalIncomeValue = document.getElementsByClassName('additional_income-value')[0],
-	addictionalExpensesValue = document.getElementsByClassName('additional_expenses-value')[0],
-	incomePeriodValue = document.getElementsByClassName('income_period-value')[0],
-	targetMonthValue = document.getElementsByClassName('target_month-value')[0],
-	salaryAmount = document.querySelector('.salary-amount'),
-	incomeTitle = document.querySelector('.income-title'),
-	expensesTitle = document.querySelector('.expenses-title'),
-	expensesItems = document.querySelectorAll('.expenses-items'),
-	expensesItem = document.querySelector('.additional_expenses-item'),
-	depositAmount = document.querySelector('.deposit-amount'),
-	depositPercent = document.querySelector('.deposit-percent'),
-	targetAmount = document.querySelector('.target-amount'),
-	periodSelect = document.querySelector('.period-select'),
-	periodAmount = document.querySelector('.period-amount'),
-	cancel = document.querySelector('#cancel'),
-	incomeItems = document.querySelectorAll('.income-items');
+let startBtn = document.getElementById('start'),
+  btnPlus = document.getElementsByTagName('button'),
+  incomeAdd = btnPlus[0],
+  expensesAdd = btnPlus[1],
+  checkDeposit = document.querySelector('#deposit-check'),
+  incomeItem = document.querySelectorAll('.additional_income-item'),
+  budgetMonthValue = document.getElementsByClassName('budget_month-value')[0],
+  budgetDayValue = document.getElementsByClassName('budget_day-value')[0],
+  expensesMonthValue = document.getElementsByClassName('expenses_month-value')[0],
+  addictionalIncomeValue = document.getElementsByClassName('additional_income-value')[0],
+  addictionalExpensesValue = document.getElementsByClassName('additional_expenses-value')[0],
+  incomePeriodValue = document.getElementsByClassName('income_period-value')[0],
+  targetMonthValue = document.getElementsByClassName('target_month-value')[0],
+  salaryAmount = document.querySelector('.salary-amount'),
+  incomeTitle = document.querySelector('.income-title'),
+  expensesTitle = document.querySelector('.expenses-title'),
+  expensesItems = document.querySelectorAll('.expenses-items'),
+  expensesItem = document.querySelector('.additional_expenses-item'),
+  depositAmount = document.querySelector('.deposit-amount'),
+  depositPercent = document.querySelector('.deposit-percent'),
+  targetAmount = document.querySelector('.target-amount'),
+  periodSelect = document.querySelector('.period-select'),
+  periodAmount = document.querySelector('.period-amount'),
+  cancelBtn = document.querySelector('#cancel'),
+  incomeItems = document.querySelectorAll('.income-items');
+
+
+
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function isString(str) {
+  if (str !== null && !isNumber(str) && str !== '') {
+    return str;
+  }
+  return;
+}
 
 const AppData = function () {
-
   this.income = {};
-	this.addIncome = [];
-	this.incomeMonth = 0;
-	this.expenses = {};
-	this.addExpenses = [];
-	this.deposit = false;
-	this.percentDeposit = 0;
-	this.moneyDeposit = 0;
-	this.budget = 0;
-	this.budgetDay = 0;
-	this.budgetMonth = 0;
+  this.addIncome = [];
+  this.incomeMonth = 0;
+  this.expenses = {};
+  this.addExpenses = [];
+  this.deposit = false;
+  this.percentDeposit = 0;
+  this.moneyDeposit = 0;
+  this.budget = 0;
+  this.budgetDay = 0;
+  this.budgetMonth = 0;
   this.expensesMonth = 0;
-  
-};
-
-AppData.prototype.check = function() {
-  if (salaryAmount.value === '') {
-    alert('Ошибка, поле Месячный доход должно быть заполнено!');
-    return;
-  }
-};
+}
 
 AppData.prototype.start = function () {
 
-
   if (salaryAmount.value === '') {
     alert('Ошибка, поле Месячный доход должно быть заполнено!');
     return;
   }
-  this.budget = salaryAmount.value;
+  this.budget = +salaryAmount.value;
 
   this.getExpenses();
   this.getIncome();
   this.getExpensesMonth();
   this.getAddExpenses();
   this.getAddIncome();
+  this.getIncomeMonth();
   this.getBudget();
   this.calcSavedMoney();
   this.showResult();
@@ -79,10 +83,10 @@ AppData.prototype.showResult = function () {
   incomePeriodValue.value = this.calcSavedMoney();
 };
 AppData.prototype.changePeriod = function () {
-  periodAmount.innerHTML = periodSelect.value;
+  periodAmount.textContent = periodSelect.value;
+  incomePeriodValue.value = this.calcSavedMoney();
 };
 AppData.prototype.addExpensesBlock = function () {
-  console.log(expensesItems.parentNode);
   let cloneExpensesItem = expensesItems[0].cloneNode(true);
   expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesAdd);
   expensesItems = document.querySelectorAll('.expenses-items');
@@ -116,9 +120,15 @@ AppData.prototype.getIncome = function () {
     let cashIncome = item.querySelector('.income-amount').value;
     if (itemIncome !== '' && cashIncome !== '') {
       this.income[itemIncome] = +cashIncome;
-      this.incomeMonth = +cashIncome;
     }
   }, this);
+};
+
+AppData.prototype.getIncomeMonth = function () {
+  for (let key in this.income) {
+    this.incomeMonth = +this.incomeMonth + +this.income[key];
+  }
+  return this.incomeMonth;
 };
 
 AppData.prototype.getAddExpenses = function () {
@@ -130,7 +140,6 @@ AppData.prototype.getAddExpenses = function () {
     }
   }, this);
 };
-
 AppData.prototype.getAddIncome = function () {
   incomeItem.forEach(function (item) {
     let itemValue = item.value.trim();
@@ -146,17 +155,14 @@ AppData.prototype.getExpensesMonth = function () {
   return this.expensesMonth;
 };
 AppData.prototype.getBudget = function () {
-  this.budgetMonth = +this.budget + +this.incomeMonth - +this.expensesMonth;
+  this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth;
   this.budgetDay = parseInt(this.budgetMonth / 30);
 
 };
-
 AppData.prototype.getTargetMonth = function () {
   let sum = Math.round(targetAmount.value / this.budgetMonth);
   return sum;
-
 };
-
 AppData.prototype.getStatusIncome = function () {
   if (this.budgetDay > 1200) {
     return ('У вас высокий уровень дохода');
@@ -168,7 +174,6 @@ AppData.prototype.getStatusIncome = function () {
     return ('Что-то пошло не так');
   }
 };
-
 AppData.prototype.getInfoDeposit = function () {
   if (this.deposit) {
     do {
@@ -179,28 +184,23 @@ AppData.prototype.getInfoDeposit = function () {
     } while (!isNumber(this.moneyDeposit));
   }
 };
-
 AppData.prototype.calcSavedMoney = function () {
   return this.budgetMonth * periodSelect.value;
-}; 
-
+};
 AppData.prototype.freezeMenu = function () {
-  start.style.display = 'none';
-  cancel.style.display = 'block';
-  incomeAdd.disabled = true;
-  expensesAdd.disabled = true;
-
+  startBtn.style.display = 'none';
+  cancelBtn.style.display = 'block';
   let allInput = document.querySelectorAll('input[type=text]');
   allInput.forEach(function (item) {
     item.disabled = true;
   });
 };
-
 AppData.prototype.resetMenu = function () {
-  cancel.style.display = 'none';
-  start.style.display = 'block';
-  incomeAdd.disabled = false;
-  expensesAdd.disabled = false;
+  cancelBtn.style.display = 'none';
+  startBtn.style.display = 'block';
+  // сброс
+  Object.assign(this, new AppData)
+
   let allInput = document.querySelectorAll('input[type=text]');
   allInput.forEach(function (item) {
     item.value = '';
@@ -209,75 +209,26 @@ AppData.prototype.resetMenu = function () {
   });
 
 };
-
-
-// AppData.getInfoDeposit();
-
 AppData.prototype.eventListeners = function () {
+  start.addEventListener('click', appData.start.bind(appData));
+  expensesAdd.addEventListener('click', appData.addExpensesBlock);
+  incomeAdd.addEventListener('click', appData.addIncomeBlock);
+  periodSelect.addEventListener('input', this.changePeriod.bind(this));
+  startBtn.disabled = true;
 
-  start.addEventListener('click', this.start.bind(appData));
-  expensesAdd.addEventListener('click', this.addExpensesBlock);
-  incomeAdd.addEventListener('click', this.addIncomeBlock);
-  periodSelect.addEventListener('input', this.changePeriod);
-  
-  start.disabled = true;
-  
   salaryAmount.addEventListener('input', function () {
     if (salaryAmount.value === '') {
-      start.disabled = true;
+      startBtn.disabled = true;
     } else {
-      start.disabled = false;
+      startBtn.disabled = false;
     }
-  
+
   });
-  
-    start.addEventListener('click', this.freezeMenu);
-    cancel.addEventListener('click', this.resetMenu);
 
-};
-
-const appData = new AppData;
+  startBtn.addEventListener('click', appData.freezeMenu);
+  cancelBtn.addEventListener('click', this.resetMenu.bind(this));
+}
+const appData = new AppData();
 
 appData.eventListeners();
-
-
-function DomElement(selector, height, width, bg, fontSize) {
-  this.selector = selector;
-  this.height = height;
-  this.width = width;
-  this.bg = bg;
-  this.fontSize = fontSize;
-}
-
-DomElement.prototype.createElem = function () {
-  let elem;
-
-  if (this.selector[0] === '.') {
-    elem = document.createElement('div');
-    elem.classList.add(this.selector.slice(1));
-  }
-
-  if (this.selector[0] === '#') {
-    elem = document.createElement('p');
-    elem.setAttribute('id', this.selector.slice(1));
-  }
-
-  this.styling(elem);
-  this.writeText(elem);
-  this.addElem(elem);
-};
-
-DomElement.prototype.styling = function (elem) {
-  elem.style.cssText = `height: ${this.height}; width: ${this.width}; background-color: ${this.bg}; font-size: ${this.fontSize}`;
-};
-
-DomElement.prototype.writeText = function (elem) {
-  elem.textContent = 'Lorem ipsum dolor sit amet!';
-};
-
-DomElement.prototype.addElem = function (elem) {
-  document.body.prepend(elem);
-};
-
-
-
+console.log(appData);
