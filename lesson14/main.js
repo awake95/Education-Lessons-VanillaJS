@@ -210,12 +210,15 @@ AppData.prototype.resetMenu = function () {
 
 };
 
+
+AppData.getInfoDeposit();
+
 AppData.prototype.eventListeners = function () {
 
-  start.addEventListener('click', appData.start.bind(appData));
-  expensesAdd.addEventListener('click', appData.addExpensesBlock);
-  incomeAdd.addEventListener('click', appData.addIncomeBlock);
-  periodSelect.addEventListener('input', appData.changePeriod);
+  start.addEventListener('click', this.start.bind(this));
+  expensesAdd.addEventListener('click', this.addExpensesBlock);
+  incomeAdd.addEventListener('click', this.addIncomeBlock);
+  periodSelect.addEventListener('input', this.changePeriod);
   
   start.disabled = true;
   
@@ -228,13 +231,13 @@ AppData.prototype.eventListeners = function () {
   
   });
   
-    start.addEventListener('click', appData.freezeMenu);
-    cancel.addEventListener('click', appData.resetMenu);
-  
+    start.addEventListener('click', this.freezeMenu);
+    cancel.addEventListener('click', this.resetMenu);
 
 };
 
-function DomElement(selector, height, width, bg, fontSize){
+
+function DomElement(selector, height, width, bg, fontSize) {
   this.selector = selector;
   this.height = height;
   this.width = width;
@@ -242,16 +245,35 @@ function DomElement(selector, height, width, bg, fontSize){
   this.fontSize = fontSize;
 }
 
-DomElement.prototype.ride = function() {
-  if(this.selector = ".") {
-    appendChild.div
+DomElement.prototype.createElem = function () {
+  let elem;
+
+  if (this.selector[0] === '.') {
+    elem = document.createElement('div');
+    elem.classList.add(this.selector.slice(1));
   }
-}
 
-const appData = new AppData();
+  if (this.selector[0] === '#') {
+    elem = document.createElement('p');
+    elem.setAttribute('id', this.selector.slice(1));
+  }
 
-AppData.prototype.eventListeners();
+  this.styling(elem);
+  this.writeText(elem);
+  this.addElem(elem);
+};
 
-console.log(appData);
+DomElement.prototype.styling = function (elem) {
+  elem.style.cssText = `height: ${this.height}; width: ${this.width}; background-color: ${this.bg}; font-size: ${this.fontSize}`;
+};
+
+DomElement.prototype.writeText = function (elem) {
+  elem.textContent = 'Lorem ipsum dolor sit amet!';
+};
+
+DomElement.prototype.addElem = function (elem) {
+  document.body.prepend(elem);
+};
+
 
 
