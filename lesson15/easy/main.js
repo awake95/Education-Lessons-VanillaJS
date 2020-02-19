@@ -202,7 +202,7 @@ class AppData {
         return this.budgetMonth * periodSelect.value;
       }
 
-     freezeMenu() {
+      freezeMenu() {
         startBtn.style.display = 'none';
         cancelBtn.style.display = 'block';
         let allInput = document.querySelectorAll('input[type=text]');
@@ -211,22 +211,23 @@ class AppData {
       
         });
       }
-
-      resetMenu() {
-        cancelBtn.style.display = 'none';
-        startBtn.style.display = 'block';
-        // сброс
-        Object.assign(this, new AppData)
       
-        let allInput = document.querySelectorAll('input[type=text]');
-        allInput.forEach(function (item) {
-          item.value = '';
-          item.disabled = false;
-          start.disabled = true;
-       
-        });
-      
+      resetMenu() { 
+        for (let i = 1; i < incomeItems.length; i++) {
+          if (i !== 0) {
+              incomeItems[i].parentNode.removeChild(incomeItems[i]); // удаляем дочерний элемент
+          }
+          incomeAdd.style.display = 'block'; // отображаем кнопку
+      };
+      for (let i = 1; i < incomeItems.length; i++) {
+          if (i !== 0) {
+              expensesItems[i].parentNode.removeChild(expensesItems[i]); // удаляем дочерний элемент
+          }
+          expensesAdd.style.display = 'block';// отображаем кнопку
       }
+     
+        };
+
 
       eventListeners () {
         start.addEventListener('click', appData.start.bind(appData));
