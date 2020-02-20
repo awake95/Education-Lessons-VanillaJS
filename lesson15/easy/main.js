@@ -208,17 +208,25 @@ class AppData {
     let allInput = document.querySelectorAll('input[type=text]');
     allInput.forEach(function (item) {
       item.disabled = true;
-
     });
   }
 
   resetMenu() {
+    let allInput = document.querySelectorAll('input[type=text]');
+    allInput.forEach(function (item) {
+      item.disabled = false;
+      item.value = '';
+    });
     for (let i = 1; i < expensesItems.length; i++) {
       expensesItems[i].remove();
     }
     for (let i = 1; i < incomeItems.length; i++) {
       incomeItems[i].remove();
     }
+    startBtn.disabled = true;
+    cancelBtn.style.display = 'none';
+    startBtn.style.display = 'block';
+    Object.assign(this, this.constructor);
   };
 
 
