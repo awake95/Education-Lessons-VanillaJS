@@ -31,7 +31,7 @@ window.addEventListener('DOMContentLoaded', function () {
         };
 
         let timerId;
-        function updateClock() {
+        const updateClock = () => {
 
             let timer = getTimeRemaining();
 
