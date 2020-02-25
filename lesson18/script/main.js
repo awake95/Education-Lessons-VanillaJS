@@ -42,15 +42,15 @@ window.addEventListener('DOMContentLoaded', function () {
             if (timer.timeRemaining <= 0) {
                 clearInterval(timerId);
                 timerHours.textContent = "00";
-                timerMinutes.textContent = "00";  
+                timerMinutes.textContent = "00";
                 timerSeconds.textContent = "00";
             }
-            
+
         }
 
         timerId = setInterval(updateClock, 1000);
         console.log(timerId);
-        
+
         updateClock();
 
     }
@@ -79,30 +79,47 @@ window.addEventListener('DOMContentLoaded', function () {
 
     const togglePopUp = () => {
         const popup = document.querySelector('.popup'),
-              popupContent = document.querySelector('.popup-content')
-              popupBtn = document.querySelectorAll('.popup-btn'),
-              popupClose = document.querySelector('.popup-close');
-                let count = 0;
+            popupContent = document.querySelector('.popup-content'),
+            popupBtn = document.querySelectorAll('.popup-btn'),
+            popupClose = document.querySelector('.popup-close');
 
+        const popupLeft = () => {
+            popup.style.display = 'block';
+            if (screen.width > 768) {
+                let start = Date.now();
+                let timer = setInterval(() => {
 
-              const popupLeft = function() {
-                  count++;
-                  popupContent.style.left = count * 2 + 'px';
-                  if (count < 350) {
-                      setTimeout(popupLeft, 10);
-                  }
-              };
-              popupLeft();
-
-              popupBtn.forEach((elem) => {
-                elem.addEventListener('click', () => {
-                    popup.style.display = 'block';
+                    let timeStop = Date.now() - start;
+                    if (timeStop >= 800) {
+                        clearInterval(timer);
+                        return;
+                    }
+                    animate(timeStop);
                 });
-            });   
-              popupClose.addEventListener('click', () => {
-                popup.style.display = 'none';
-              });
-         }
+
+                let animate = (timeStop) => {
+                    let widthContent = +getComputedStyle(popupContent).width.split('px')[0];
+                    widthContent = -widthContent / 2 + 50 + 'px';
+                    popupContent.style.left = timeStop / 16 + '%';
+                    popupContent.style.marginLeft = widthContent;
+                };
+
+            }
+
+        }
+        popupBtn.forEach((elem) => {
+            elem.addEventListener('click', () => {
+                popup.style.display = 'block';
+                popupLeft();
+            });
+        });
+        popupClose.addEventListener('click', () => {
+            popup.style.display = 'none';
+        });
+
+    };
+
+
     togglePopUp();
 
     countTimer('26 february 2020');
