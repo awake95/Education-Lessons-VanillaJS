@@ -60,44 +60,25 @@ window.addEventListener('DOMContentLoaded', function () {
 
         const btnMenu = document.querySelector('.menu'),
             menu = document.querySelector('menu');
-        //     closeBtn = document.querySelector('.close-btn'),
-        //     menuItems = menu.querySelectorAll('ul>li');
 
+        const handlerMenu = () => {
+            menu.classList.toggle('active-menu')
+        }
 
-        // const handlerMenu = () => {
-        //     menu.classList.toggle('active-menu');
-        // }
-
-        // btnMenu.addEventListener('click', handlerMenu);
-        // closeBtn.addEventListener('click', handlerMenu);
-        // menuItems.forEach((elem) => elem.addEventListener('click', handlerMenu))
+        btnMenu.addEventListener('click', handlerMenu);
         menu.addEventListener('click', (event) => {
+
             let target = event.target;
 
             if (target.classList.contains('close-btn')) {
-                menu.classList.toggle('active-menu');
+                handlerMenu();
             } else {
-                target = target.closest('ul>li');
-
-                if (!target) {
-                    menu.classList.toggle('active-menu');
-                }
+                target.closest('ul>li');
+                handlerMenu();
             }
         });
-
-
-
-        // const closeMenu = (element) => {
-        //     menu.textContent = element.textContent;
-        // };
-
-        // for(let i=0; i < btnMenu.length; i++) {
-        //     btnMenu[i].addEventListener('click', () => {
-        //         closeMenu(btnMenu[i]);
-        //     });
-        // }
-        // closeMenu();
     }
+
     toggleMenu();
 
     //popup
