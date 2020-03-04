@@ -325,7 +325,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
         const calcItems = event => {
             const target = event.target;
-            if (target.classList.contains('calc-item')) {
+            if (target.classList.contains('calc-item') && target.tagName !== "SELECT") {
                 target.value = target.value.replace(/\D/g, '');
             }
         }
@@ -345,22 +345,35 @@ window.addEventListener('DOMContentLoaded', function () {
               totalValue = document.getElementById('total');
     
         const countSum = () => {
-            let total = 0;
+            let total = 0,
+                countValue = 1,
+                dayValue = 1;
 
             const typeValue = calcType.options[calcType.selectedIndex].value,
-                  squareValue = calsSqure.value;
-                  console.log(squareValue);
+                  squareValue = +calcSquare.value;
+               
+                  if(calcCount.value > 1) {
+                    countValue += (calcCount.value - 1) / 10;
+                  }
 
+                  if (calcDay.value && calcDay.value < 5) {
+                      dayValue *= 2;
+                  }else if (calcDay.value && calcDay.value < 10) {
+                      dayValue *= 1.5;
+                  }
 
-            totalValue.textContent = total;
+                  
+
+                    if (typeValue && squareValue) {
+                        total = price * typeValue * squareValue * countValue * dayValue;
+                    };
+
+                    totalValue.textContent = total;
         };
     
         calcBlocks.addEventListener('change', (event) => {
             const target = event.target;
-            // if(target.matches('.calc-type') || target.matches('.calc-square') ||
-            // target.matches('.calc-day') || target.matches('.calc-count')) {
-            //     countSum();
-            // }
+
             if(target.tagName !== 'select') {
                 countSum();
             }
