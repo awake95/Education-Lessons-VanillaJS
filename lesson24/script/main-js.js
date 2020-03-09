@@ -338,43 +338,43 @@ window.addEventListener('DOMContentLoaded', function () {
     const calculator = (price = 100) => {
 
         const calcBlocks = document.querySelector('.calc-block'),
-              calcType = document.querySelector('.calc-type'),
-              calcSquare = document.querySelector('.calc-square'),
-              calcDay = document.querySelector('.calc-day'),
-              calcCount = document.querySelector('.calc-count'),
-              totalValue = document.getElementById('total');
-    
+            calcType = document.querySelector('.calc-type'),
+            calcSquare = document.querySelector('.calc-square'),
+            calcDay = document.querySelector('.calc-day'),
+            calcCount = document.querySelector('.calc-count'),
+            totalValue = document.getElementById('total');
+
         const countSum = () => {
             let total = 0,
                 countValue = 1,
                 dayValue = 1;
 
             const typeValue = calcType.options[calcType.selectedIndex].value,
-                  squareValue = +calcSquare.value;
-               
-                  if(calcCount.value > 1) {
-                    countValue += (calcCount.value - 1) / 10;
-                  }
+                squareValue = +calcSquare.value;
 
-                  if (calcDay.value && calcDay.value < 5) {
-                      dayValue *= 2;
-                  }else if (calcDay.value && calcDay.value < 10) {
-                      dayValue *= 1.5;
-                  }
+            if (calcCount.value > 1) {
+                countValue += (calcCount.value - 1) / 10;
+            }
 
-                  
+            if (calcDay.value && calcDay.value < 5) {
+                dayValue *= 2;
+            } else if (calcDay.value && calcDay.value < 10) {
+                dayValue *= 1.5;
+            }
 
-                    if (typeValue && squareValue) {
-                        total = price * typeValue * squareValue * countValue * dayValue;
-                    };
 
-                    totalValue.textContent = total;
+
+            if (typeValue && squareValue) {
+                total = price * typeValue * squareValue * countValue * dayValue;
+            };
+
+            totalValue.textContent = total;
         };
-    
+
         calcBlocks.addEventListener('change', (event) => {
             const target = event.target;
 
-            if(target.tagName !== 'select') {
+            if (target.tagName !== 'select') {
                 countSum();
             }
 
@@ -391,22 +391,115 @@ window.addEventListener('DOMContentLoaded', function () {
             loadMessage = 'Загрузка...',
             successMessage = 'Спасибо! Мы скоро с Вами свяжемся';
 
-        const form = document.getElementById('form1');
+        const checkInput = () => {
+            const allInput = document.querySelector('body'),
+                nameForm = document.getElementById('form2-name'),
+                value = nameForm.value;
+
+            const phone = event => {
+                const target = event.target;
+                if (target.classList.contains('form-phone')) {
+                    target.value = target.value.replace(/[^0-9+]/g, '');
+                }
+            }
+            allInput.addEventListener('input', phone);
+
+            nameForm.addEventListener('input', (e) => {
+                let newValue = e.target.value;
+                if (newValue.match(/[^а-яА-Я]/g)) {
+                    nameForm.value = value;
+                    return;
+                }
+                // nameForm.value = nameForm.value.replace(/[^а-яА-Я]/g, '');
+            })
+
+
+            const name = event => {
+                const target = event.target;
+                if (target.classList.contains('form-name')) {
+                    target.value = target.value.replace(/[^а-яА-Я]/g, '');
+                }
+                if (target.classList.contains('mess')) {
+                    target.value = target.value.replace(/[^а-яА-Я]/g, '');
+                }
+            }
+            allInput.addEventListener('input', name);
+
+        }
+        checkInput();
+
+
+        const form = document.getElementById('form1'),
+            form2 = document.getElementById('form2'),
+            form3 = document.getElementById('form3');
 
         const statusMessage = document.createElement('div');
         statusMessage.style.cssText = 'font-size: 2rem';
+        let body = {};
+        const bodyPost = () => {
+            postData(body, () => {
+                statusMessage.textContent = successMessage;
+            }, (error) => {
+                statusMessage.textContent = errorMessage;
+                console.log(error);
+            });
+        }
 
         form.addEventListener('submit', (event) => {
             event.preventDefault();
             form.appendChild(statusMessage);
-
-            const request = new XMLHttpRequest();
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'multipart/form-data');
+            statusMessage.textContent = loadMessage;
             const formData = new FormData(form);
-            request.send(formData);
 
+            formData.forEach((val, key) => {
+                body[key] = val;
+            });
+            bodyPost();
+            form.reset();
         });
+        form2.addEventListener('submit', (event) => {
+            event.preventDefault();
+            form2.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+            const formData = new FormData(form2);
+
+            formData.forEach((val, key) => {
+                body[key] = val;
+            });
+            bodyPost();
+            form2.reset();
+        });
+        form3.addEventListener('submit', (event) => {
+            event.preventDefault();
+            form3.appendChild(statusMessage);
+            statusMessage.textContent = loadMessage;
+            const formData = new FormData(form3);
+
+            formData.forEach((val, key) => {
+                body[key] = val;
+            });
+            bodyPost();
+            form3.reset();
+        });
+
+
+        const postData = (body, outputData, errorData) => {
+            const request = new XMLHttpRequest();
+            request.addEventListener('readystatechange', () => {
+                if (request.readyState !== 4) {
+                    return;
+                }
+                if (request.status === 200) {
+                    outputData();
+                } else {
+                    errorData(request.status);
+                }
+            });
+            request.open('POST', './server.php');
+            request.setRequestHeader('Content-Type', 'application/JSON');
+
+            request.send(JSON.stringify(body));
+        }
     };
 
     sendForm();
