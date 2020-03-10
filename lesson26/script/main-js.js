@@ -478,19 +478,9 @@ window.addEventListener('DOMContentLoaded', function () {
             const formData = new FormData(form);
             let body = {};
 
-            postData(body)
-                .then((response) => {
-                    if (response.status !== 200) {
-                        throw new Error('status network not 200');
-                    }
-                    statusMessage.textContent = succesMesage;
-                })
-                .catch((error) => {
-                    statusMessage.textContent = errorMessage;
-                    console.error(error);
-                })
+          
 
-            const postData = (formData) => {
+            const postData = () => {
 
                 return fetch('./server.php', {
                     method: 'POST',
@@ -503,6 +493,17 @@ window.addEventListener('DOMContentLoaded', function () {
                     body: formData
                 })
             };
+            postData(body)
+            .then((response) => {
+                if (response.status !== 200) {
+                    throw new Error('status network not 200');
+                }
+                statusMessage.textContent = succesMesage;
+            })
+            .catch((error) => {
+                statusMessage.textContent = errorMessage;
+                console.error(error);
+            })
         });
     };
     sendForm('#form1');
